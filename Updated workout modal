@@ -1,0 +1,64 @@
+// const mongoose=require('mongoose');
+// const bcrypt=require('bcrypt');
+// const Schema=mongoose.Schema;
+// const WorkoutSchema=new Schema({
+//     name:{
+//         type:String,
+//         required:true
+//     },
+//     address:{
+//         type:String,
+//         required:true
+//     }
+
+// },{timestamps:true});
+// // WorkoutSchema.set('collection', 'users'); // changing colleciton name
+// WorkoutSchema.statics.signUp=async(model,name,address)=>{
+//    console.log(this)
+//     const exists=await model.findOne({name});
+//     if(exists)
+//     {
+//         throw Error('name already exists');
+//     }
+
+//     const salt=await bcrypt.genSalt(10);
+//     const hash=await bcrypt.hash(address,salt);
+//     const workout=await model.create({name,address:hash})
+//     return workout;
+
+// }
+// module.exports=mongoose.model('Workout',WorkoutSchema)
+
+
+// with this
+const mongoose = require('mongoose');
+const bcrypt = require('bcrypt');
+const Schema = mongoose.Schema;
+
+const WorkoutSchema = new Schema({
+    name: {
+        type: String,
+        required: true
+    },
+    address: {
+        type: String,
+        required: true
+    }
+}, { timestamps: true });
+
+// Define the signUp method using a traditional function expression
+WorkoutSchema.statics.signUp = async function (model,name, address) {
+    console.log(this); // 'this' refers to the schema
+    const exists = await this.findOne({ name });
+    if (exists) {
+        throw new Error('Name already exists');
+    }
+
+    const salt = await bcrypt.genSalt(10);
+    const hash = await bcrypt.hash(address, salt);
+
+    const workout = await this.create({ name, address: hash });
+    return workout;
+}
+
+module.exports = mongoose.model('Workout', WorkoutSchema);
