@@ -1,3 +1,5 @@
+// user route
+
 const express=require('express');
 const UserRouter=express.Router();
 const Workout=require('../models/Workout');
