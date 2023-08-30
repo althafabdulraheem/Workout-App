@@ -2,7 +2,7 @@ require('dotenv').config()
 const express=require('express');
 const app=express();
 const WorkRoutes=require('./routes/api');
-
+// use cors
 app.use(express.json())
 app.use((req,res,next)=>{
     
