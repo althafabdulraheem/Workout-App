@@ -3,7 +3,7 @@ const express=require('express');
 const app=express();
 const WorkRoutes=require('./routes/api');
 const mongoose=require('mongoose');
-
+// app.use(cors())       use cors for cross orgin
 app.use(express.json())
 app.use((req,res,next)=>{
     
